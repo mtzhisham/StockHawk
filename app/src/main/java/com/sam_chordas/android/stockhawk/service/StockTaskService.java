@@ -138,7 +138,7 @@ public class StockTaskService extends GcmTaskService{
 
                     @Override
                     public void run() {
-                        Toast.makeText(MyStocksActivity.getAppContext(),"Stock Symbol not found!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyStocksActivity.getAppContext(),R.string.not_stock,Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -85,6 +85,7 @@ public abstract class CursorRecyclerViewAdapter <VH extends RecyclerView.ViewHol
       dataIsValid = false;
       notifyDataSetChanged();
     }
+
     return oldCursor;
   }
 
@@ -101,4 +102,5 @@ public abstract class CursorRecyclerViewAdapter <VH extends RecyclerView.ViewHol
       notifyDataSetChanged();
     }
   }
+
 }

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">صقر الاسهم</string>
+
+    <!--action bar clickables-->
+    <string name="action_settings">اعدادات</string>
+    <string name="action_change_units">تغيير الوحدات</string>
+
+    <!--adding new stock-->
+    <string name="symbol_search">بحث و اضافة</string>
+    <string name="content_test">بحث عن اسم سهم</string>
+    <string name="add_stk">اضافة سهم جديد</string>
+
+    <!--Toasts-->
+    <string name="network_toast">التطبيق يتطلب اتصال بالانترنت</string>
+    <string name="not_char">حروف انجليزية فقط</string>
+    <string name="not_stock">اسم السهم غير موجود!</string>
+    <string name="saved_stock">السهم موجود بالفعل</string>
+
+</resources>

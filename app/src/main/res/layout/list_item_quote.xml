@@ -5,8 +5,9 @@
     android:layout_height="72dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:paddingLeft="16dp"
+    android:paddingStart="16dp"
     >
   <TextView
       android:id="@+id/stock_symbol"
@@ -15,20 +16,24 @@
       android:layout_height="wrap_content"
       android:gravity="left|center_vertical"
       tools:text="GOOG"
+      android:layoutDirection="locale"
       />
   <LinearLayout
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      android:gravity="right"
+      android:gravity="end"
       >
     <TextView
         android:id="@+id/bid_price"
         style="@style/BidPriceTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="10sp"
+        android:paddingStart="10sp"
+        android:paddingEnd="10sp"
         tools:text="1000.00"
+        android:layoutDirection="locale"
+        android:textDirection="locale"
         />
     <TextView
         android:id="@+id/change"
@@ -39,6 +44,8 @@
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         tools:text="100%"
+        android:layoutDirection="locale"
+        android:textDirection="locale"
         />
   </LinearLayout>
 </LinearLayout>
