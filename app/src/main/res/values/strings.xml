@@ -23,5 +23,6 @@
   <string name="STOCK_NOT_FOUND" translatable="false">-1</string>
   <string name="STOCK_UNKNOWN" translatable="false">0</string>
   <string name="pref_status_stock_status" translatable="false">stock-status</string>
+  <string name="MENU_SYM" translatable="false">symbol</string>
 
 </resources>
