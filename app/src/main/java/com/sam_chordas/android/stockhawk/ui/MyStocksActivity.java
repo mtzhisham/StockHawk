@@ -99,9 +99,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 Log.d("menu",textView.getText().toString());
                 Bundle bundle = new Bundle();
                 bundle.putString( getString(R.string.MENU_SYM),textView.getText().toString());
-                Intent intent = new Intent(context, GraphTaskService.class);
+                Intent intent = new Intent(context, Graph.class);
                 intent.putExtra( getString(R.string.MENU_SYM),textView.getText().toString());
-                startService(intent);
+                startActivity(intent);
               }
             }));
     recyclerView.setAdapter(mCursorAdapter);
@@ -252,6 +252,10 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         QuoteColumns.ISCURRENT + " = ?",
         new String[]{"1"},
         null);
+  }
+
+  public static Context getmContext() {
+    return context;
   }
 
   @Override

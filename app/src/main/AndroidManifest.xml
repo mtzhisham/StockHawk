@@ -31,7 +31,7 @@
 
         <service
             android:name=".service.StockTaskService"
-            android:exported="true"
+            android:exported="false"
             android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE">
             <intent-filter>
                 <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY" />
@@ -40,17 +40,13 @@
         <service android:name=".service.StockIntentService" />
         <service
             android:name=".service.GraphTaskService"
-            android:exported="true"
-            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE">
-            <intent-filter>
-                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY" />
-            </intent-filter>
-        </service>
+            android:exported="false"
+           />
 
         <provider
-            android:name=".data.generated.QuoteProvider"
             android:authorities="com.sam_chordas.android.stockhawk.data.QuoteProvider"
-            android:exported="false" />
+            android:name="com.sam_chordas.android.stockhawk.data.generated.QuoteProvider"
+            android:exported="false"/>
 
         <activity android:name=".ui.Graph"></activity>
     </application>
