@@ -3,11 +3,9 @@ package com.sam_chordas.android.stockhawk.rest;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
@@ -25,6 +23,7 @@ import org.json.JSONObject;
  * Created by sam_chordas on 10/8/15.
  */
 public class Utils {
+
 
   private static String LOG_TAG = Utils.class.getSimpleName();
   private static Context c = MyStocksActivity.getAppContext();
@@ -114,13 +113,12 @@ public class Utils {
 
         }
         else {
+
             setStockStatus(c,STOCK_FOUND);
             builder.withValue(QuoteColumns.BIDPRICE, truncateBidPrice(jsonObject.getString("Bid")));
             Log.d("doubler","ok");
             String change = jsonObject.getString("Change");
             builder.withValue(QuoteColumns.SYMBOL, jsonObject.getString("symbol"));
-
-
             builder.withValue(QuoteColumns.PERCENT_CHANGE, truncateChange(
                     jsonObject.getString("ChangeinPercent"), true));
             builder.withValue(QuoteColumns.CHANGE, truncateChange(change, false));
@@ -135,7 +133,7 @@ public class Utils {
 
 
 
-        }catch(JSONException e){
+        }catch(Exception e){
             e.printStackTrace();
 
         }

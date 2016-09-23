@@ -37,7 +37,7 @@ import java.util.ArrayList;
  */
 public class StockTaskService extends GcmTaskService{
   private String LOG_TAG = StockTaskService.class.getSimpleName();
-public static final String ACTION_DATA_UPDATED = "com.sam_chordas.android.stockhawk.app.ACTION_DATA_UPDATED";
+  public static final String ACTION_DATA_UPDATED = "com.sam_chordas.android.stockhawk.app.ACTION_DATA_UPDATED";
   private OkHttpClient client = new OkHttpClient();
   private Context mContext;
   private StringBuilder mStoredSymbols = new StringBuilder();
@@ -157,6 +157,10 @@ public static final String ACTION_DATA_UPDATED = "com.sam_chordas.android.stockh
                     Log.d("resultss", "feeh");
                     mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
                             vals);
+
+                    Intent broadcastIntent = new Intent(ACTION_DATA_UPDATED)
+                            .setPackage(mContext.getPackageName());
+                    mContext.sendBroadcast(broadcastIntent);
                 } catch (RemoteException | OperationApplicationException e) {
                     Log.e(LOG_TAG, "Error applying batch insert", e);
                 }

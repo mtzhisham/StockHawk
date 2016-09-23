@@ -1,7 +1,6 @@
 package com.sam_chordas.android.stockhawk.ui;
 
 import android.app.Activity;
-import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,14 +10,10 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.db.chart.view.LineChartView;
 import com.google.android.gms.gcm.GcmNetworkManager;
-import com.google.android.gms.gcm.GcmTaskService;
-import com.google.android.gms.gcm.OneoffTask;
-import com.google.android.gms.gcm.Task;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -28,16 +23,9 @@ import com.sam_chordas.android.stockhawk.service.GraphTaskService;
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -53,6 +41,7 @@ public class Graph extends Activity {
     BroadcastReceiver receiver;
     String startDate ="startDate";
     String endDate="endDate";
+
 
 
     ArrayList<String> high;
@@ -136,6 +125,8 @@ public class Graph extends Activity {
                 Log.d("toDate", toTv.getText().toString());
                 fireService(fromTv.getText().toString(),toTv.getText().toString());
                 loadData(fromTv.getText().toString(),toTv.getText().toString());
+
+
 
 
             }
