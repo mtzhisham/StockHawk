@@ -8,5 +8,11 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
 
 
-    <dimen name="widget_dimen">40dp</dimen>
+
+
+    <dimen name="widget_min_width">350dp</dimen>
+    <dimen name="widget_min_height">250dp</dimen>
+
+    <dimen name="widget_min_resize_width">180dp</dimen>
+    <dimen name="widget_min_resize_height">90dp</dimen>
 </resources>

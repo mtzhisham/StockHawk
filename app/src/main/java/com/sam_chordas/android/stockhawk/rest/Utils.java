@@ -73,7 +73,10 @@ public class Utils {
       change = change.substring(0, change.length() - 1);
     }
     change = change.substring(1, change.length());
-    double round = (double) Math.round(Double.parseDouble(change) * 100) / 100;
+      double round = 0d;
+      if(!change.equals("null")){
+          round = (double) Math.round(Double.parseDouble(change) * 100) / 100;
+      }
     change = String.format("%.2f", round);
     StringBuffer changeBuffer = new StringBuffer(change);
     changeBuffer.insert(0, weight);
@@ -119,8 +122,10 @@ public class Utils {
             Log.d("doubler","ok");
             String change = jsonObject.getString("Change");
             builder.withValue(QuoteColumns.SYMBOL, jsonObject.getString("symbol"));
-            builder.withValue(QuoteColumns.PERCENT_CHANGE, truncateChange(
-                    jsonObject.getString("ChangeinPercent"), true));
+
+                builder.withValue(QuoteColumns.PERCENT_CHANGE, truncateChange(
+                        jsonObject.getString("ChangeinPercent"), true));
+
             builder.withValue(QuoteColumns.CHANGE, truncateChange(change, false));
             builder.withValue(QuoteColumns.ISCURRENT, 1);
             if (change.charAt(0) == '-') {

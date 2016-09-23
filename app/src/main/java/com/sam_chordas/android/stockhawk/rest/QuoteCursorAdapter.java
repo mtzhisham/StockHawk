@@ -3,7 +3,6 @@ package com.sam_chordas.android.stockhawk.rest;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
@@ -106,13 +105,13 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
 
     @Override
     public void onItemSelected(){
-      itemView.setBackgroundColor(Color.LTGRAY);
+//      itemView.setBackgroundColor(Color.LTGRAY);
       Log.d("onItemSelected","selected");
     }
 
     @Override
     public void onItemClear(){
-      itemView.setBackgroundColor(0);
+//      itemView.setBackgroundColor(0);
     }
 
     @Override

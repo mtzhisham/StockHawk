@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,8 +27,10 @@ import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -55,7 +58,7 @@ public class Graph extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         mContext = this;
         context = getApplicationContext();
 
@@ -77,7 +80,7 @@ public class Graph extends AppCompatActivity {
         graph.getViewport().setScrollable(true);
         // set manual X bounds
         graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(10);
+        graph.getViewport().setMinX(5);
         graph.getViewport().setMaxX(50);
 
         final TextView fromTv = (TextView) findViewById(R.id.fromDatePicker);
@@ -102,8 +105,8 @@ public class Graph extends AppCompatActivity {
 
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat df = new SimpleDateFormat(myFormat, Locale.US);
-        toTv.setText(df.format(getMeYesterday()));
-        fromTv.setText("2016-01-01");
+        toTv.setText(getMPast(1));
+        fromTv.setText(getMPast(365));
 
 
 
@@ -170,10 +173,16 @@ public class Graph extends AppCompatActivity {
 
 
 
-    private Date getMeYesterday(){
-        return new Date(System.currentTimeMillis()-24*60*60*1000);
-    }
+    private String getMPast(int i ){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -i);
+        return dateFormat.format(cal.getTime());
 
+
+    }
+    private Date getLastYear(){return new Date(System.currentTimeMillis()-30*(24*60*60*1000));
+    }
     private boolean isDataExist(String key) {
         boolean isKeyExist = false;
         try {
@@ -268,5 +277,16 @@ public class Graph extends AppCompatActivity {
         super.onStop();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
 
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

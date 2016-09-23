@@ -12,24 +12,34 @@
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="center"/>
+
     </android.support.v7.widget.Toolbar>
 
-    <com.jjoe64.graphview.GraphView
-        android:layout_width="match_parent"
-        android:layout_height="250dip"
-        android:id="@+id/graph"
-        />
+
+
+ <FrameLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:background="@android:drawable/dialog_holo_light_frame"
+     android:layout_marginTop="16dp">
+
+     <com.jjoe64.graphview.GraphView
+         android:layout_width="match_parent"
+         android:layout_height="300dip"
+         android:id="@+id/graph"
+         android:layout_margin="16dp"
+         android:padding="16dp"
+
+         />
+ </FrameLayout>
+
+
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
+        android:layout_margin="16dp"
        >
 
         <TextView
@@ -71,7 +81,8 @@
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button"
-        android:layout_marginTop="33dp"
+        android:paddingTop="16dp"
+        android:layout_marginEnd="32dp"
         android:layout_gravity="end" />
 
 </LinearLayout>

@@ -4,58 +4,41 @@
     android:layout_height="match_parent"
     android:id="@+id/widget_list"
     android:orientation="vertical"
+    android:background="#FAFAFA"
      >
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#bbDEDFDE"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:id="@+id/widgetLayoutMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primary"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" >
-
-            <ImageView
-                android:id="@+id/widgetImgLauncher"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_launcher" />
-
-            <LinearLayout
-                android:id="@+id/widgetTopBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#4B4B4D"
-                    android:textStyle="bold" />
 
 
-            </LinearLayout>
-        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#aaa" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/primary">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#4B4B4D"
+        android:textStyle="bold"
+        android:gravity="start|center"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical" />
+</LinearLayout>
+
 
         <ListView
             android:id="@+id/widgetCollectionList"
@@ -64,4 +47,3 @@
         </ListView>
     </LinearLayout>
 
-</LinearLayout>

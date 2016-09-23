@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -59,6 +61,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   private Cursor mCursor;
   boolean isConnected;
   private static Context context;
+    SharedPreferences prefs = null;
   public static final String TASK_TAG_WIFI = "wifi_task";
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +70,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
+      getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+      prefs = getSharedPreferences("com.sam_chordas.android.stockhawk", MODE_PRIVATE);
     mContext = this;
     MyStocksActivity.context = getApplicationContext();
     ConnectivityManager cm =
@@ -85,11 +89,11 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     if (savedInstanceState == null){
       // Run the initialize task service so that some stocks appear upon an empty database
       mServiceIntent.putExtra("tag", "init");
-      if (isConnected){
-        startService(mServiceIntent);
-      } else{
-        networkToast();
-      }
+//      if (isConnected){
+//        startService(mServiceIntent);
+//      } else{
+//        networkToast();
+//      }
     }
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -169,25 +173,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     mItemTouchHelper.attachToRecyclerView(recyclerView);
 
     mTitle = getTitle();
-    if (isConnected){
-      long period = 3600L;
-      long flex = 10L;
-      String periodicTag = "periodic";
 
-      // create a periodic task to pull stocks once every hour after the app has been opened. This
-      // is so Widget data stays up to date.
-      PeriodicTask periodicTask = new PeriodicTask.Builder()
-          .setService(StockTaskService.class)
-          .setPeriod(period)
-          .setFlex(flex)
-          .setTag(periodicTag)
-          .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
-          .setRequiresCharging(false)
-          .build();
-      // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
-      // are updated.
-      GcmNetworkManager.getInstance(this).schedule(periodicTask);
-    }
 
   }
 
@@ -208,6 +194,41 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   @Override
   public void onResume() {
     super.onResume();
+      if (prefs.getBoolean("firstrun", true)) {
+          // Do first run stuff here then set 'firstrun' as false
+          // using the following line to edit/commit prefs
+
+
+
+
+          if (isConnected){
+              startService(mServiceIntent);
+              long period = 3600L;
+              long flex = 10L;
+              String periodicTag = "periodic";
+
+              // create a periodic task to pull stocks once every hour after the app has been opened. This
+              // is so Widget data stays up to date.
+              PeriodicTask periodicTask = new PeriodicTask.Builder()
+                      .setService(StockTaskService.class)
+                      .setPeriod(period)
+                      .setFlex(flex)
+                      .setTag(periodicTag)
+                      .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
+                      .setRequiresCharging(false)
+                      .build();
+              // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
+              // are updated.
+              GcmNetworkManager.getInstance(this).schedule(periodicTask);
+          }
+
+          else {
+              networkToast();
+          }
+
+
+          prefs.edit().putBoolean("firstrun", false).apply();
+      }
     getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
   }
 
@@ -236,10 +257,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
 
     if (id == R.id.action_change_units){
       // this is for changing stock changes from percent value to dollar value

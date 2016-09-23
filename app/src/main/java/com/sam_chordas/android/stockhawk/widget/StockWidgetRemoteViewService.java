@@ -1,6 +1,5 @@
 package com.sam_chordas.android.stockhawk.widget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +11,6 @@ import android.widget.RemoteViewsService;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
-import com.sam_chordas.android.stockhawk.service.StockTaskService;
 
 /**
  * Created by moataz on 23/09/16.
@@ -93,7 +91,7 @@ public class StockWidgetRemoteViewService extends RemoteViewsService {
                 int isUp = mCursor.getInt(mCursor.getColumnIndex(QuoteColumns.ISUP));
                     Log.d(LOG_TAG,QuoteColumns.SYMBOL);
                 // create List Item for Widget ListView
-                RemoteViews listItemRemoteView = new RemoteViews(mContext.getPackageName(), R.layout.list_item_quote);
+                RemoteViews listItemRemoteView = new RemoteViews(mContext.getPackageName(), R.layout.list_item_quote_widget);
                 listItemRemoteView.setTextViewText(R.id.stock_symbol,stockSymbol);
                 listItemRemoteView.setTextViewText(R.id.bid_price,stockBidPrice);
                 listItemRemoteView.setTextViewText(R.id.change,stockPriceChange);
@@ -108,7 +106,7 @@ public class StockWidgetRemoteViewService extends RemoteViewsService {
                 // set Onclick Item Intent
                 Intent onClickItemIntent = new Intent();
                 onClickItemIntent.putExtra(getString(R.string.MENU_SYM),stockSymbol);
-                listItemRemoteView.setOnClickFillInIntent(R.id.list_item_quote,onClickItemIntent);
+                listItemRemoteView.setOnClickFillInIntent(R.id.list_item_quote_widget,onClickItemIntent);
                 return listItemRemoteView;
             }catch (Exception e){
                 e.printStackTrace();
