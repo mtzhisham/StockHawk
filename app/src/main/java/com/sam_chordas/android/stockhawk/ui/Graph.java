@@ -72,6 +72,8 @@ public class Graph extends Activity {
         symHigh = sym+"High";
         symLow = sym+"Low";
         symDate = sym+"Date";
+        startDate = sym+startDate;
+        endDate = sym+endDate;
         Log.d("activity",sym);
         mGcmNetworkManager = GcmNetworkManager.getInstance(this);
         graph = (GraphView) findViewById(R.id.graph);

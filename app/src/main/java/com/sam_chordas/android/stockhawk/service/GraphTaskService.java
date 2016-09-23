@@ -72,6 +72,8 @@ public class GraphTaskService extends IntentService {
     }
 
     public String getGraph(String sym,String startDate,String endDate) throws UnsupportedEncodingException {
+
+        Log.d("service", startDate + " to " + endDate);
         StringBuilder urlStringBuilder = new StringBuilder();
         urlStringBuilder.append("https://query.yahooapis.com/v1/public/yql?q=");
         urlStringBuilder.append("select * from yahoo.finance.historicaldata where symbol = ");

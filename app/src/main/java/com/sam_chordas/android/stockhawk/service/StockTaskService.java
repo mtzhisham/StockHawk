@@ -2,6 +2,7 @@ package com.sam_chordas.android.stockhawk.service;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
  */
 public class StockTaskService extends GcmTaskService{
   private String LOG_TAG = StockTaskService.class.getSimpleName();
-
+public static final String ACTION_DATA_UPDATED = "com.sam_chordas.android.stockhawk.app.ACTION_DATA_UPDATED";
   private OkHttpClient client = new OkHttpClient();
   private Context mContext;
   private StringBuilder mStoredSymbols = new StringBuilder();
@@ -164,6 +165,10 @@ public class StockTaskService extends GcmTaskService{
                 e.printStackTrace();
             }
         }
+
+      Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
+      mContext.sendBroadcast(dataUpdatedIntent);
+
 
     return result;
 
