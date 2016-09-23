@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Graph extends Activity {
+public class Graph extends AppCompatActivity {
     final private String TAG_TASK_ONEOFF_LOG ="graph task";
     Context context;
     Context mContext;
@@ -49,9 +51,14 @@ public class Graph extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_graph);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mContext = this;
         context = getApplicationContext();
-        setContentView(R.layout.activity_graph);
+
         LineChartView mChart = (LineChartView) findViewById(R.id.linechart);
 
 
