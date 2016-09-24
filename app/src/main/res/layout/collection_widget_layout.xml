@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/widget_list"
     android:orientation="vertical"
-    android:background="#FAFAFA"
+
      >
 
 

@@ -194,6 +194,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   @Override
   public void onResume() {
     super.onResume();
+
+      if (isConnected){
       if (prefs.getBoolean("firstrun", true)) {
           // Do first run stuff here then set 'firstrun' as false
           // using the following line to edit/commit prefs
@@ -201,9 +203,10 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
 
 
-          if (isConnected){
+
               startService(mServiceIntent);
-              long period = 3600L;
+            long period = 3600L;
+//              long period = 30L; //testing
               long flex = 10L;
               String periodicTag = "periodic";
 
@@ -220,14 +223,18 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
               // are updated.
               GcmNetworkManager.getInstance(this).schedule(periodicTask);
+        Log.d("main","task fired");
+
+        prefs.edit().putBoolean("firstrun", false).apply();
           }
 
-          else {
-              networkToast();
-          }
 
 
-          prefs.edit().putBoolean("firstrun", false).apply();
+
+
+      }
+      else {
+        networkToast();
       }
     getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
   }
