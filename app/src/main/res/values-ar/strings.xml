@@ -22,18 +22,18 @@
     <string name="graph_low_desc"  translatable="true">القيمة المنخفضة</string>
 
     <!--snack-->
-    <string name="retry">حاول</string>
-    <string name="graph_company_name">اسم الشركة</string>
-    <string name="graph_date">انقر على الرسم</string>
-    <string name="graph_date_desc">التاريخ</string>
-    <string name="graph_from_date">اختر بداية المدة</string>
-    <string name="graph_graph">الرسم البيانى</string>
-    <string name="graph_high">العليا</string>
-    <string name="graph_low">المنخفضة</string>
-    <string name="graph_to_date">اختر نهاية المدة</string>
-    <string name="graph_update_plot">تحديث الرسم البياني</string>
-    <string name="no_connection">غير متصل بالانترنيت</string>
-    <string name="to">اللى</string>
-    <string name="from">من</string>
+    <string name="retry" translatable="true">حاول</string>
+    <string name="graph_company_name" translatable="true">اسم الشركة</string>
+    <string name="graph_date" translatable="true">انقر على الرسم</string>
+    <string name="graph_date_desc" translatable="true">التاريخ</string>
+    <string name="graph_from_date" translatable="true">اختر بداية المدة</string>
+    <string name="graph_graph" translatable="true">الرسم البيانى</string>
+    <string name="graph_high" translatable="true">العليا</string>
+    <string name="graph_low" translatable="true">المنخفضة</string>
+    <string name="graph_to_date" translatable="true">اختر نهاية المدة</string>
+    <string name="graph_update_plot" translatable="true">تحديث الرسم البياني</string>
+    <string name="no_connection" translatable="true">غير متصل بالانترنيت</string>
+    <string name="to" translatable="true">الى</string>
+    <string name="from" translatable="true">من</string>
 
 </resources>

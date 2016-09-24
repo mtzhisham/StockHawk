@@ -3,25 +3,19 @@ package com.sam_chordas.android.stockhawk.widget;
 /**
  * Created by moataz on 23/09/16.
  */
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.widget.RemoteViews;
-
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.sam_chordas.android.stockhawk.ui.Graph;
-import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
+
 
 public class WidgetProvider extends AppWidgetProvider {
     private static final String LOG_TAG = WidgetProvider.class.getSimpleName();
@@ -52,17 +46,11 @@ public class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Receive Broadcast About Stock Data Update
         super.onReceive(context, intent);
         if (intent.getAction().equals(StockTaskService.ACTION_DATA_UPDATED)){
-            Log.d(LOG_TAG,"sh3'ala");
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,getClass()));
-            // update All Widgets
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds,R.id.widgetCollectionList);
-
-
-
 
         }
     }

@@ -8,7 +8,7 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
@@ -30,14 +30,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.stetho.Stetho;
-import com.google.android.gms.gcm.OneoffTask;
+
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.rest.QuoteCursorAdapter;
 import com.sam_chordas.android.stockhawk.rest.RecyclerViewItemClickListener;
 import com.sam_chordas.android.stockhawk.rest.Utils;
-import com.sam_chordas.android.stockhawk.service.GraphTaskService;
+
 import com.sam_chordas.android.stockhawk.service.StockIntentService;
 import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.google.android.gms.gcm.GcmNetworkManager;
@@ -45,6 +45,7 @@ import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
 import com.melnykov.fab.FloatingActionButton;
 import com.sam_chordas.android.stockhawk.touch_helper.SimpleItemTouchHelperCallback;
+import com.wang.avi.AVLoadingIndicatorView;
 
 public class MyStocksActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -62,9 +63,11 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   private QuoteCursorAdapter mCursorAdapter;
   private Context mContext;
   private Cursor mCursor;
+  private AVLoadingIndicatorView avi;
+  private RecyclerView recyclerView;
   boolean isConnected;
   private static Context context;
-    SharedPreferences prefs = null;
+SharedPreferences prefs = null;
   public static final String TASK_TAG_WIFI = "wifi_task";
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +83,10 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     MyStocksActivity.context = getApplicationContext();
     ConnectivityManager cm =
         (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-    Stetho.initializeWithDefaults(context);
+
+      String indicator=getIntent().getStringExtra("indicator");
+      avi= (AVLoadingIndicatorView) findViewById(R.id.avi);
+      avi.setIndicator(indicator);
 
     NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
     isConnected = activeNetwork != null &&
@@ -92,25 +98,20 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     if (savedInstanceState == null){
       // Run the initialize task service so that some stocks appear upon an empty database
       mServiceIntent.putExtra("tag", "init");
-//      if (isConnected){
-//        startService(mServiceIntent);
-//      } else{
-//        networkToast();
-//      }
+
     }
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
-
+      startAnim(recyclerView);
     mCursorAdapter = new QuoteCursorAdapter(this, null);
     recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,
             new RecyclerViewItemClickListener.OnItemClickListener() {
               @Override public void onItemClick(View v, int position) {
                 //TODO:
                 // do something on item click
-                Log.d("menu","selected");
                 TextView textView = (TextView) v.findViewById(R.id.stock_symbol);
-                Log.d("menu",textView.getText().toString());
+
                 Bundle bundle = new Bundle();
                 bundle.putString( getString(R.string.MENU_SYM),textView.getText().toString());
                 Intent intent = new Intent(context, Graph.class);
@@ -139,7 +140,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                   // On FAB click, receive user input. Make sure the stock doesn't already exist
                   // in the DB and proceed accordingly
                   if(isAr(input.toString())){
-                    Log.d("word",input.toString());
+
                     Toast.makeText(MyStocksActivity.this, R.string.not_char, Toast.LENGTH_SHORT).show();
                 }
                   else{
@@ -182,39 +183,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   }
 
 
-    public void haveASnack(){
-        if (!isConnected){
-
-            final Snackbar snackbar = Snackbar
-                    .make(findViewById(android.R.id.content), getString(R.string.no_connection), Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.retry), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            if(isConnected) {
-
-                                return;
-
-                            }
-                            else {
-                                haveASnack();
-                            }
-                        }
-                    });
-
-// Changing message text color
-            snackbar.setActionTextColor(Color.WHITE);
-
-// Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.BLACK);
-            sbView.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_dark));
-            snackbar.show();
-        }
-
-    }
-
 
   public boolean isAr(String s) {
     for (int i = 0; i < s.length();) {
@@ -230,25 +198,32 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     return MyStocksActivity.context;
   }
 
+    void startAnim(View view){
+//        avi.show();
+        avi.smoothToShow();
+        avi.setIndicatorColor(ContextCompat.getColor(context, R.color.primary));
+    }
+
+    void stopAnim(View view){
+//        avi.hide();
+        avi.smoothToHide();
+    }
   @Override
   public void onResume() {
+
+
+      //scheduler will run the fist time only
     super.onResume();
-      haveASnack();
       if (isConnected){
       if (prefs.getBoolean("firstrun", true)) {
           // Do first run stuff here then set 'firstrun' as false
           // using the following line to edit/commit prefs
-
-
-
-
 
               startService(mServiceIntent);
             long period = 3600L;
 //              long period = 30L; //testing
               long flex = 10L;
               String periodicTag = "periodic";
-
               // create a periodic task to pull stocks once every hour after the app has been opened. This
               // is so Widget data stays up to date.
               PeriodicTask periodicTask = new PeriodicTask.Builder()
@@ -262,13 +237,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
               // are updated.
               GcmNetworkManager.getInstance(this).schedule(periodicTask);
-        Log.d("main","task fired");
 
         prefs.edit().putBoolean("firstrun", false).apply();
           }
-
-
-
 
 
       }
@@ -332,6 +303,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   public void onLoadFinished(Loader<Cursor> loader, Cursor data){
     mCursorAdapter.swapCursor(data);
     mCursor = data;
+      stopAnim(recyclerView);
   }
 
   @Override

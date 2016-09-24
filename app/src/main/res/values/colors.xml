@@ -8,8 +8,8 @@
   <color name="primary_light">#FFECB3</color>
   <color name="primary">#FFC107</color>
   <color name="primary_dark">#FF8F00</color>
-  <color name="accent">#795548</color>
-  <color name="accent_dark">#5D4037</color>
+  <color name="accent">#FF3D00</color>
+  <color name="accent_dark">#DD2C00</color>
   <color name="widg_text">#4B4B4D</color>
 
 

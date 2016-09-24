@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Binder;
-import android.util.Log;
+
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -89,7 +89,6 @@ public class StockWidgetRemoteViewService extends RemoteViewsService {
                 String stockBidPrice = mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE));
                 String stockPriceChange = mCursor.getString(mCursor.getColumnIndex(QuoteColumns.CHANGE));
                 int isUp = mCursor.getInt(mCursor.getColumnIndex(QuoteColumns.ISUP));
-                    Log.d(LOG_TAG,QuoteColumns.SYMBOL);
                 // create List Item for Widget ListView
                 RemoteViews listItemRemoteView = new RemoteViews(mContext.getPackageName(), R.layout.list_item_quote_widget);
                 listItemRemoteView.setTextViewText(R.id.stock_symbol,stockSymbol);
@@ -105,6 +104,7 @@ public class StockWidgetRemoteViewService extends RemoteViewsService {
 
                 // set Onclick Item Intent
                 Intent onClickItemIntent = new Intent();
+                //sending the sym required for graph activity to start
                 onClickItemIntent.putExtra(getString(R.string.MENU_SYM),stockSymbol);
                 listItemRemoteView.setOnClickFillInIntent(R.id.list_item_quote_widget,onClickItemIntent);
                 return listItemRemoteView;

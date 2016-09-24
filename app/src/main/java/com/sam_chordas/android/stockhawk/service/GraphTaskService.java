@@ -1,18 +1,11 @@
 package com.sam_chordas.android.stockhawk.service;
 
 import android.app.IntentService;
-import android.app.Service;
+
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GcmTaskService;
-import com.google.android.gms.gcm.OneoffTask;
-import com.google.android.gms.gcm.TaskParams;
-import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
@@ -21,7 +14,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -73,7 +66,7 @@ public class GraphTaskService extends IntentService {
 
     public String getGraph(String sym,String startDate,String endDate) throws UnsupportedEncodingException {
 
-        Log.d("service", startDate + " to " + endDate);
+//        Log.d("service", startDate + " to " + endDate);
         StringBuilder urlStringBuilder = new StringBuilder();
         urlStringBuilder.append("https://query.yahooapis.com/v1/public/yql?q=");
         urlStringBuilder.append("select * from yahoo.finance.historicaldata where symbol = ");
@@ -108,7 +101,7 @@ public class GraphTaskService extends IntentService {
         symLow = sym+"Low";
         symDate = sym+"Date";
 
-        Log.d("service running",sym);
+
         try {
 
 
@@ -117,12 +110,9 @@ public class GraphTaskService extends IntentService {
 
 
 
-                Log.d("syDB","mesh mawgood");
+
                 try{
                     String graphData = run(getGraph(sym,startDate,endDate));
-                    Log.d("GcmTask","network call");
-                    Log.d("GcmTask",graphData);
-
 
                     JSONObject data = new JSONObject(graphData);
                     JSONObject query = data.getJSONObject("query");
@@ -142,9 +132,6 @@ public class GraphTaskService extends IntentService {
                     }
 
 
-                    Log.d("ArraySizeService", highList.size() + "");
-                    Log.d("ArraySizeService", highList.toArray().length + "");
-
 
                 }
                 catch (Exception e){
@@ -161,12 +148,10 @@ public class GraphTaskService extends IntentService {
 
 
 
-
             snappydb.close();
 
-
             sendResult("done");
-            Log.d("ArraySizeService", strings.size() + "");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

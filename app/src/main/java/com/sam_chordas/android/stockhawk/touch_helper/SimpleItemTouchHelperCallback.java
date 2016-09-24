@@ -2,7 +2,7 @@ package com.sam_chordas.android.stockhawk.touch_helper;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
+
 
 /**
  * Created by sam_chordas on 10/6/15.

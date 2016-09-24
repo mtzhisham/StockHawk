@@ -1,6 +1,6 @@
 package com.sam_chordas.android.stockhawk.ui;
 
-import android.app.Activity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,14 +12,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.db.chart.view.LineChartView;
+
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
@@ -35,7 +34,7 @@ import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
 import com.wang.avi.AVLoadingIndicatorView;
-import com.wang.avi.indicators.BallClipRotateIndicator;
+
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,25 +44,25 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Graph extends AppCompatActivity {
-    final private String TAG_TASK_ONEOFF_LOG ="graph task";
-    Context context;
-    Context mContext;
-    GraphView graph;
-    String symHigh;
-    String symLow;
-    String symDate;
-    String sym;
-    BroadcastReceiver receiver;
-    String startDate ="startDate";
-    String endDate="endDate";
+
+    private Context context;
+    private Context mContext;
+    private GraphView graph;
+    private String symHigh;
+    private String symLow;
+    private String symDate;
+    private String sym;
+    private BroadcastReceiver receiver;
+    private String startDate ="startDate";
+    private String endDate="endDate";
     private AVLoadingIndicatorView avi;
-    TextView name_tv;
-    TextView date_tv;
-    TextView high_tv;
-    TextView low_tv;
+    private TextView name_tv;
+    private TextView date_tv;
+    private TextView high_tv;
+    private TextView low_tv;
 
 
-    ArrayList<String> high;
+
     private GcmNetworkManager mGcmNetworkManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +81,7 @@ public class Graph extends AppCompatActivity {
         high_tv = (TextView) findViewById(R.id.high_tv);
         low_tv = (TextView) findViewById(R.id.low_tv);
 
-        LineChartView mChart = (LineChartView) findViewById(R.id.linechart);
+
 
         String indicator=getIntent().getStringExtra("indicator");
         avi= (AVLoadingIndicatorView) findViewById(R.id.avi);
@@ -95,11 +94,12 @@ public class Graph extends AppCompatActivity {
         symDate = sym+"Date";
         startDate = sym+startDate;
         endDate = sym+endDate;
-        Log.d("activity",sym);
+
         mGcmNetworkManager = GcmNetworkManager.getInstance(this);
         graph = (GraphView) findViewById(R.id.graph);
         graph.getViewport().setScalable(true);
         graph.getViewport().setScrollable(true);
+
         // set manual X bounds
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(5);
@@ -125,43 +125,23 @@ public class Graph extends AppCompatActivity {
             }
         });
 
-
-
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
-        SimpleDateFormat df = new SimpleDateFormat(myFormat, Locale.US);
         toTv.setText(getMPast(1));
         fromTv.setText(getMPast(365));
 
-
-
        if(isDataExist(symHigh)){
-
            fromTv.setText(getStart());
            toTv.setText(getEnd());
            loadData(fromTv.getText().toString(),toTv.getText().toString());
-
-
        }else {
-
            fireService(fromTv.getText().toString(),toTv.getText().toString());
 
-
        }
-
-
-
-
        FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("fromDate",  fromTv.getText().toString());
-                Log.d("toDate", toTv.getText().toString());
                 fireService(fromTv.getText().toString(),toTv.getText().toString());
                 loadData(fromTv.getText().toString(),toTv.getText().toString());
-
-
-
 
             }
         });
@@ -173,14 +153,8 @@ public class Graph extends AppCompatActivity {
                 String s = intent.getStringExtra(GraphTaskService.MESSAGE);
                 // do something here.
                 loadData(fromTv.getText().toString(),toTv.getText().toString());
-                Log.d("from service",s);
-
             }
         };
-
-
-
-
 
     }
 
@@ -209,15 +183,15 @@ public class Graph extends AppCompatActivity {
 
 
     private String getMPast(int i ){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //date will be displayed in english on both en/ar locale
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -i);
         return dateFormat.format(cal.getTime());
 
 
     }
-    private Date getLastYear(){return new Date(System.currentTimeMillis()-30*(24*60*60*1000));
-    }
+
     private boolean isDataExist(String key) {
         boolean isKeyExist = false;
         try {
@@ -282,10 +256,6 @@ public class Graph extends AppCompatActivity {
 
             snappydb.close();
 
-            Log.d("ArraySize", high.size() + "");
-            Log.d("ArraySizeService", isKeyExist + "");
-
-
             DataPoint[] highDataPoints = new DataPoint[high.size()];
             DataPoint[] lowDataPoints = new DataPoint[low.size()];
 
@@ -305,8 +275,8 @@ public class Graph extends AppCompatActivity {
 
             highSeries.setColor(Color.GREEN);
             lowSeries.setColor(Color.RED);
-            highSeries.setTitle("High");
-            lowSeries.setTitle("low");
+            highSeries.setTitle(getString(R.string.graph_high));
+            lowSeries.setTitle(getString(R.string.graph_low));
 
             highSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
                 @Override

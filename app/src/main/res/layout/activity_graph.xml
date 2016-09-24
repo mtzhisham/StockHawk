@@ -169,8 +169,8 @@
             android:id="@+id/fromDatePicker"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:contentDescription="@string/graph_from_date"
-            android:layoutDirection="locale"
-            android:textDirection="locale"/>
+
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -190,8 +190,8 @@
             android:id="@+id/toDatePicker"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:contentDescription="@string/graph_to_date"
-            android:layoutDirection="locale"
-            android:textDirection="locale"/>
+
+            />
     </LinearLayout>
 
     <com.melnykov.fab.FloatingActionButton

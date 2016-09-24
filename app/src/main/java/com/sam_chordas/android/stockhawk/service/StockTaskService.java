@@ -64,6 +64,7 @@ public class StockTaskService extends GcmTaskService{
     }
   @Override
   public int onRunTask(TaskParams params){
+      Log.d("MyService","run");
     Cursor initQueryCursor;
     if (mContext == null){
       mContext = this;
@@ -127,11 +128,11 @@ public class StockTaskService extends GcmTaskService{
         urlString = urlStringBuilder.toString();
         try {
             getResponse = fetchData(urlString);
-            Log.d("resultss", getResponse);
+
             vals = Utils.quoteJsonToContentVals(getResponse);
-            Log.d("resultss", getStatus(MyStocksActivity.getAppContext())+"");
+
             if (getStatus(MyStocksActivity.getAppContext()) == STOCK_NOT_FOUND) {
-                Log.d("resultss", "mafeesh");
+                ;
 
                 Handler handler = new Handler(Looper.getMainLooper());
 
@@ -154,7 +155,7 @@ public class StockTaskService extends GcmTaskService{
                         mContext.getContentResolver().update(QuoteProvider.Quotes.CONTENT_URI, contentValues,
                                 null, null);
                     }
-                    Log.d("resultss", "feeh");
+
                     mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
                             vals);
 

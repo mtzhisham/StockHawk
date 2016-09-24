@@ -13,7 +13,7 @@ import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
-import com.snappydb.SnappyDB;
+
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -34,8 +34,8 @@ public class Utils {
 
   public static ArrayList quoteJsonToContentVals(String JSON){
     ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
-    JSONObject jsonObject = null;
-    JSONArray resultsArray = null;
+    JSONObject jsonObject;
+    JSONArray resultsArray;
     try{
       jsonObject = new JSONObject(JSON);
       if (jsonObject != null && jsonObject.length() != 0){
@@ -45,7 +45,7 @@ public class Utils {
           jsonObject = jsonObject.getJSONObject("results")
               .getJSONObject("quote");
           batchOperations.add(buildBatchOperation(jsonObject));
-          Log.d("result",jsonObject.toString());
+
         } else{
           resultsArray = jsonObject.getJSONObject("results").getJSONArray("quote");
 
@@ -104,7 +104,7 @@ public class Utils {
       SharedPreferences.Editor spe = sp.edit();
       spe.putInt(c.getString(R.string.pref_status_stock_status),status);
       spe.apply();
-      Log.d("doubler",status + "");
+
   }
 
   public static ContentProviderOperation buildBatchOperation(JSONObject jsonObject){
@@ -115,14 +115,14 @@ public class Utils {
         if (jsonObject.getString("Bid").equals("null")) {
 //        builder.withValue(QuoteColumns.BIDPRICE, truncateBidPrice("00.00"));
         setStockStatus(c,STOCK_NOT_FOUND);
-            Log.d("doubler"," not ok");
+
 
         }
         else {
 
             setStockStatus(c,STOCK_FOUND);
             builder.withValue(QuoteColumns.BIDPRICE, truncateBidPrice(jsonObject.getString("Bid")));
-            Log.d("doubler","ok");
+
             String change = jsonObject.getString("Change");
             String sym = jsonObject.getString("symbol");
             builder.withValue(QuoteColumns.SYMBOL,sym );
@@ -138,7 +138,6 @@ public class Utils {
                 builder.withValue(QuoteColumns.ISUP, 1);
             }
 
-            Log.d("name",jsonObject.getString("Name"));
 
             DB snappydb = DBFactory.open(MyStocksActivity.getmContext(),"graphDB");
             snappydb.put(sym+"Name",jsonObject.getString("Name"));
