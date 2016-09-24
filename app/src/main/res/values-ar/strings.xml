@@ -1,19 +1,39 @@
 <resources>
-    <string name="app_name">صقر الاسهم</string>
+    <string name="app_name" translatable="true">صقر الاسهم</string>
 
     <!--action bar clickables-->
-    <string name="action_settings">اعدادات</string>
-    <string name="action_change_units">تغيير الوحدات</string>
+    <string name="action_change_units" translatable="true">تغيير الوحدات</string>
 
     <!--adding new stock-->
-    <string name="symbol_search">بحث و اضافة</string>
-    <string name="content_test">بحث عن اسم سهم</string>
-    <string name="add_stk">اضافة سهم جديد</string>
+    <string name="symbol_search" translatable="true">بحث و اضافة</string>
+    <string name="content_test" translatable="true">بحث عن اسم سهم</string>
+    <string name="add_stk" translatable="true">اضافة سهم جديد</string>
 
     <!--Toasts-->
-    <string name="network_toast">التطبيق يتطلب اتصال بالانترنت</string>
-    <string name="not_char">حروف انجليزية فقط</string>
-    <string name="not_stock">اسم السهم غير موجود!</string>
-    <string name="saved_stock">السهم موجود بالفعل</string>
+    <string name="network_toast" translatable="true">التطبيق يتطلب اتصال بالانترنت</string>
+    <string name="not_char" translatable="true">حروف انجليزية فقط</string>
+    <string name="not_stock" translatable="true">اسم السهم غير موجود!</string>
+    <string name="saved_stock" translatable="true">السهم موجود بالفعل</string>
+
+
+    <!--Graph-->
+    <string name="grap_placeholder">----</string>
+    <string name="graph_high_value"  translatable="true">القيمة العليا</string>
+    <string name="graph_low_desc"  translatable="true">القيمة المنخفضة</string>
+
+    <!--snack-->
+    <string name="retry">حاول</string>
+    <string name="graph_company_name">اسم الشركة</string>
+    <string name="graph_date">انقر على الرسم</string>
+    <string name="graph_date_desc">التاريخ</string>
+    <string name="graph_from_date">اختر بداية المدة</string>
+    <string name="graph_graph">الرسم البيانى</string>
+    <string name="graph_high">العليا</string>
+    <string name="graph_low">المنخفضة</string>
+    <string name="graph_to_date">اختر نهاية المدة</string>
+    <string name="graph_update_plot">تحديث الرسم البياني</string>
+    <string name="no_connection">غير متصل بالانترنيت</string>
+    <string name="to">اللى</string>
+    <string name="from">من</string>
 
 </resources>

@@ -19,8 +19,8 @@
   <string name="saved_stock" translatable="true">This stock is already saved!</string>
 
     <!--snack-->
-    <string name="no_connection">No internet connection!</string>
-    <string name="retry">RETRY</string>
+    <string name="no_connection" translatable="true">No internet connection!</string>
+    <string name="retry" translatable="true">RETRY</string>
 
 
   <!--Graph-->
@@ -29,7 +29,7 @@
   <string name="graph_date"  translatable="true">tap on graph</string>
   <string name="grap_placeholder">----</string>
   <string name="graph_company_name"  translatable="true">Company Name</string>
-  <string name="graph_high_value"  translatable="true">High Value</string>
+  <string name="graph_high_value"  translatable="true">ٍStock High Value</string>
   <string name="graph_date_desc"  translatable="true">Date</string>
   <string name="graph_low_desc"  translatable="true">Stock Low Value</string>
   <string name="graph_graph"  translatable="true">Plotted Graph</string>
@@ -45,9 +45,9 @@
   <string name="STOCK_UNKNOWN" translatable="false">0</string>
   <string name="pref_status_stock_status" translatable="false">stock-status</string>
   <string name="MENU_SYM" translatable="false">symbol</string>
-<string name="list_sym">GOOG</string>
-    <string name="list_bid">1000.00</string>
-    <string name="list_change">100%</string>
-    <string name="app_icon">Application Logo</string>
+<string name="list_sym" translatable="false">GOOG</string>
+    <string name="list_bid" translatable="false">1000.00</string>
+    <string name="list_change" translatable="false">100%</string>
+    <string name="app_icon" translatable="false">Application Logo</string>
 
 </resources>
