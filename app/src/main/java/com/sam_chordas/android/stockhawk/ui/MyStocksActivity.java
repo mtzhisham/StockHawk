@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -118,6 +121,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     recyclerView.setAdapter(mCursorAdapter);
 
 
+
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.attachToRecyclerView(recyclerView);
     fab.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +181,41 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
   }
 
+
+    public void haveASnack(){
+        if (!isConnected){
+
+            final Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), getString(R.string.no_connection), Snackbar.LENGTH_INDEFINITE)
+                    .setAction(getString(R.string.retry), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            if(isConnected) {
+
+                                return;
+
+                            }
+                            else {
+                                haveASnack();
+                            }
+                        }
+                    });
+
+// Changing message text color
+            snackbar.setActionTextColor(Color.WHITE);
+
+// Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.BLACK);
+            sbView.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_dark));
+            snackbar.show();
+        }
+
+    }
+
+
   public boolean isAr(String s) {
     for (int i = 0; i < s.length();) {
       int c = s.codePointAt(i);
@@ -194,7 +233,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   @Override
   public void onResume() {
     super.onResume();
-
+      haveASnack();
       if (isConnected){
       if (prefs.getBoolean("firstrun", true)) {
           // Do first run stuff here then set 'firstrun' as false

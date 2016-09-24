@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.sam_chordas.android.stockhawk.ui.Graph">
+    tools:context="com.sam_chordas.android.stockhawk.ui.Graph"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:fabs="http://schemas.android.com/tools"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,13 +24,112 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <android.support.v7.widget.Toolbar
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        >
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:rowCount="2"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/grap_placeholder"
+                android:id="@+id/name_tv"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:contentDescription="@string/graph_company_name"
+                android:layoutDirection="locale"
+                android:textDirection="locale"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/graph_high"
+                android:id="@+id/textView6"
+                android:layout_row="0"
+                android:layout_column="15"
+                android:contentDescription="@string/graph_high"
+                android:layoutDirection="locale"
+                android:textDirection="locale"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/grap_placeholder"
+                android:id="@+id/high_tv"
+                android:layout_row="0"
+                android:layout_column="16"
+                android:contentDescription="@string/graph_high_value"
+                android:layoutDirection="locale"
+                android:textDirection="locale"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/graph_date"
+                android:id="@+id/date_tv"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:contentDescription="@string/graph_date_desc"
+                android:layoutDirection="locale"
+                android:textDirection="locale"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/graph_low"
+                android:id="@+id/textView7"
+                android:layout_row="1"
+                android:layout_column="15"
+                android:contentDescription="@string/graph_low"
+                android:layoutDirection="locale"
+                android:textDirection="locale"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/grap_placeholder"
+                android:id="@+id/low_tv"
+                android:layout_row="1"
+                android:layout_column="16"
+                android:contentDescription="@string/graph_low_desc"
+                android:layoutDirection="locale"
+                android:textDirection="locale"/>
+        </GridLayout>
+
+
+    </android.support.v7.widget.Toolbar>
 
 
  <FrameLayout
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
      android:background="@android:drawable/dialog_holo_light_frame"
-     android:layout_marginTop="16dp">
+     android:layout_marginTop="16dp"
+     android:layoutDirection="locale"
+     >
+
+     <com.wang.avi.AVLoadingIndicatorView
+         android:layout_width="100dp"
+         android:layout_height="100dp"
+         app:indicatorName="BallPulseIndicator"
+         android:id="@+id/avi"
+         android:layout_gravity="center"
+         />
 
      <com.jjoe64.graphview.GraphView
          android:layout_width="match_parent"
@@ -29,7 +137,7 @@
          android:id="@+id/graph"
          android:layout_margin="16dp"
          android:padding="16dp"
-
+         android:contentDescription="@string/graph_graph"
          />
  </FrameLayout>
 
@@ -46,43 +154,63 @@
 
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="from"
+            android:text="@string/from"
             android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:contentDescription="@string/from"
+            android:layoutDirection="locale"
+            android:textDirection="locale"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/fromDatePicker"
-            android:text="2015-09-15"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:contentDescription="@string/graph_from_date"
+            android:layoutDirection="locale"
+            android:textDirection="locale"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="to"
-            android:id="@+id/textView2" />
+            android:text="@string/to"
+            android:id="@+id/textView2"
+            android:contentDescription="@string/to"
+            android:layoutDirection="locale"
+            android:textDirection="locale"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/toDatePicker"
-            android:text="2016-09-20"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:contentDescription="@string/graph_to_date"
+            android:layoutDirection="locale"
+            android:textDirection="locale"/>
     </LinearLayout>
 
-    <Button
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:paddingTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_gravity="end" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@mipmap/ic_sync_white_48dp"
+        fab:fab_colorNormal="@color/accent"
+        fab:fab_colorPressed="@color/accent_dark"
+        fabs:fab_colorRipple="@color/ripple"
+        fab:fab_shadow="true"
+        fab:fab_type="normal"
+        fabs:layout_anchor="recycler_view"
+        fabs:layout_anchorGravity="bottom | end"
+        android:contentDescription="@string/graph_update_plot"
+
+        />
 
 </LinearLayout>
+</ScrollView>

@@ -3,7 +3,7 @@
 
   <string name="action_example" translatable="false">Example action</string>
   <!--action bar clickables-->
-  <string name="action_settings" translatable="true">Settings</string>
+
   <string name="action_change_units" translatable="true">Change Units</string>
 
   <!--adding new stock-->
@@ -18,11 +18,36 @@
   <string name="not_stock" translatable="true">Sorry can\'t find this stock</string>
   <string name="saved_stock" translatable="true">This stock is already saved!</string>
 
+    <!--snack-->
+    <string name="no_connection">No internet connection!</string>
+    <string name="retry">RETRY</string>
+
+
+  <!--Graph-->
+  <string name="graph_high" translatable="true">High </string>
+  <string name="graph_low" translatable="true">Low</string>
+  <string name="graph_date"  translatable="true">tap on graph</string>
+  <string name="grap_placeholder">----</string>
+  <string name="graph_company_name"  translatable="true">Company Name</string>
+  <string name="graph_high_value"  translatable="true">High Value</string>
+  <string name="graph_date_desc"  translatable="true">Date</string>
+  <string name="graph_low_desc"  translatable="true">Stock Low Value</string>
+  <string name="graph_graph"  translatable="true">Plotted Graph</string>
+  <string name="from"  translatable="true">from</string>
+  <string name="to"  translatable="true">to</string>
+  <string name="graph_from_date"  translatable="true">Pick Start Date</string>
+  <string name="graph_to_date"  translatable="true">Pick End Date</string>
+  <string name="graph_update_plot"  translatable="true">Update Plot</string>
+
   <!--not visable to user-->
   <string name="input_prefill" translatable="false"></string>
   <string name="STOCK_NOT_FOUND" translatable="false">-1</string>
   <string name="STOCK_UNKNOWN" translatable="false">0</string>
   <string name="pref_status_stock_status" translatable="false">stock-status</string>
   <string name="MENU_SYM" translatable="false">symbol</string>
+<string name="list_sym">GOOG</string>
+    <string name="list_bid">1000.00</string>
+    <string name="list_change">100%</string>
+    <string name="app_icon">Application Logo</string>
 
 </resources>

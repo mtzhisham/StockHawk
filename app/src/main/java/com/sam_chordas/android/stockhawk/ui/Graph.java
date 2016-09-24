@@ -5,7 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
+import com.melnykov.fab.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,18 +17,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.db.chart.view.LineChartView;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.rest.MyDatePicker;
 import com.sam_chordas.android.stockhawk.service.GraphTaskService;
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
+import com.wang.avi.AVLoadingIndicatorView;
+import com.wang.avi.indicators.BallClipRotateIndicator;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,7 +56,11 @@ public class Graph extends AppCompatActivity {
     BroadcastReceiver receiver;
     String startDate ="startDate";
     String endDate="endDate";
-
+    private AVLoadingIndicatorView avi;
+    TextView name_tv;
+    TextView date_tv;
+    TextView high_tv;
+    TextView low_tv;
 
 
     ArrayList<String> high;
@@ -62,9 +76,17 @@ public class Graph extends AppCompatActivity {
         mContext = this;
         context = getApplicationContext();
 
+
+        name_tv = (TextView) findViewById(R.id.name_tv);
+        date_tv = (TextView) findViewById(R.id.date_tv);
+        high_tv = (TextView) findViewById(R.id.high_tv);
+        low_tv = (TextView) findViewById(R.id.low_tv);
+
         LineChartView mChart = (LineChartView) findViewById(R.id.linechart);
 
-
+        String indicator=getIntent().getStringExtra("indicator");
+        avi= (AVLoadingIndicatorView) findViewById(R.id.avi);
+        avi.setIndicator(indicator);
 
         Intent intent = getIntent();
         sym = intent.getStringExtra(getString(R.string.MENU_SYM));
@@ -82,7 +104,9 @@ public class Graph extends AppCompatActivity {
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(5);
         graph.getViewport().setMaxX(50);
-
+        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        name_tv.setText(sym);
+        startAnim(graph);
         final TextView fromTv = (TextView) findViewById(R.id.fromDatePicker);
         fromTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +151,7 @@ public class Graph extends AppCompatActivity {
 
 
 
-        Button btn = (Button) findViewById(R.id.button);
+       FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,6 +182,17 @@ public class Graph extends AppCompatActivity {
 
 
 
+    }
+
+    void startAnim(View view){
+//        avi.show();
+          avi.smoothToShow();
+        avi.setIndicatorColor(ContextCompat.getColor(context, R.color.primary));
+    }
+
+    void stopAnim(View view){
+//        avi.hide();
+          avi.smoothToHide();
     }
 
 
@@ -229,38 +264,81 @@ public class Graph extends AppCompatActivity {
 
         graph.removeAllSeries();
 
-        LineGraphSeries<DataPoint> series;
+        LineGraphSeries<DataPoint> highSeries;
+        LineGraphSeries<DataPoint> lowSeries;
+
 
         try {
             DB snappydb = DBFactory.open(context,"graphDB");
+            String gTitle = snappydb.get(sym+"Name");
+            name_tv.setText(gTitle);
             boolean isKeyExist =  snappydb.exists(symHigh);
-            ArrayList strings = snappydb.getObject(symHigh, ArrayList.class);
+            ArrayList high = snappydb.getObject(symHigh, ArrayList.class);
+            ArrayList low = snappydb.getObject(symLow, ArrayList.class);
+            final ArrayList dates = snappydb.getObject(symDate, ArrayList.class);
 
             snappydb.put(startDate,fromDate);
             snappydb.put(endDate,toDate);
 
             snappydb.close();
 
-            Log.d("ArraySize", strings.size() + "");
+            Log.d("ArraySize", high.size() + "");
             Log.d("ArraySizeService", isKeyExist + "");
 
-            ArrayList<DataPoint> points = new ArrayList<DataPoint>();
-            DataPoint[] dataPoints = new DataPoint[strings.size()];
 
-            for (int i = 0; i < strings.size();i++){
+            DataPoint[] highDataPoints = new DataPoint[high.size()];
+            DataPoint[] lowDataPoints = new DataPoint[low.size()];
 
-                dataPoints[i] = new DataPoint(i, Double.valueOf((String) strings.get(i)));
+
+
+            for (int i = 0; i < high.size();i++){
+
+                highDataPoints[i] = new DataPoint(i, Double.valueOf((String) high.get(i)));
+                lowDataPoints[i] = new DataPoint(i, Double.valueOf((String) low.get(i)));
+
 
             }
 
-            series = new LineGraphSeries<DataPoint>(dataPoints
-            );
-            graph.addSeries(series);
+            highSeries = new LineGraphSeries<DataPoint>(highDataPoints);
+            lowSeries = new LineGraphSeries<DataPoint>(lowDataPoints);
+
+
+            highSeries.setColor(Color.GREEN);
+            lowSeries.setColor(Color.RED);
+            highSeries.setTitle("High");
+            lowSeries.setTitle("low");
+
+            highSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                   double round = (double) Math.round(dataPoint.getY() * 100) / 100;
+                    String value = String.format("%.2f", round);
+                    Toast.makeText(context,  dates.get((int) dataPoint.getX()) + " "+ value , Toast.LENGTH_SHORT).show();
+                    high_tv.setText(value);
+                    date_tv.setText(dates.get((int) dataPoint.getX()).toString());
+                }
+            });
+
+            lowSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+                @Override
+                public void onTap(Series series, DataPointInterface dataPoint) {
+                    double round = (double) Math.round(dataPoint.getY() * 100) / 100;
+                    String value = String.format("%.2f", round);
+                    low_tv.setText(value);
+                }
+            });
+
+
+            graph.addSeries(highSeries);
+            graph.addSeries(lowSeries);
+            graph.getLegendRenderer().setVisible(true);
+            graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
         } catch (SnappydbException e) {
             e.printStackTrace();
         }
 
+        stopAnim(graph);
     }
 
     @Override

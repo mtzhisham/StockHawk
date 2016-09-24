@@ -10,13 +10,13 @@
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     app:cardElevation="@dimen/cardview_default_elevation"
     app:cardCornerRadius="@dimen/cardview_default_radius"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
+
     >
 
 
@@ -28,6 +28,8 @@
     android:orientation="horizontal"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    app:paddingStart="16dp"
+    app:paddingEnd="16dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:id="@+id/list_item_quote"
@@ -40,9 +42,11 @@
       style="@style/StockSymbolTextStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:gravity="left|center_vertical"
-      tools:text="GOOG"
+      android:gravity="start|center_vertical"
+      tools:text="@string/list_sym"
       android:layoutDirection="locale"
+      android:textDirection="locale"
+
       />
   <LinearLayout
       android:layout_width="0dp"
@@ -57,7 +61,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="10sp"
         android:paddingEnd="10sp"
-        tools:text="1000.00"
+        tools:text="@string/list_bid"
         android:layoutDirection="locale"
         android:textDirection="locale"
         />
@@ -67,9 +71,9 @@
         style="@style/PercentChangeTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        tools:text="100%"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        tools:text="@string/list_change"
         android:layoutDirection="locale"
         android:textDirection="locale"
         />

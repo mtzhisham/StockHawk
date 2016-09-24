@@ -1,11 +1,14 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:fabs="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:isScrollContainer="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -32,13 +35,13 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@drawable/ic_add_white_24dp"
-            fab:fab_colorNormal="@color/material_blue_500"
-            fab:fab_colorPressed="@color/material_blue_600"
-            fab:fab_colorRipple="@color/ripple"
+            fab:fab_colorNormal="@color/accent"
+            fab:fab_colorPressed="@color/accent_dark"
+            fabs:fab_colorRipple="@color/ripple"
             fab:fab_shadow="true"
             fab:fab_type="normal"
-            fab:layout_anchor="recycler_view"
-            fab:layout_anchorGravity="bottom | end"
+            fabs:layout_anchor="recycler_view"
+            fabs:layout_anchorGravity="bottom | end"
             android:contentDescription="@string/add_stk"
 
             />

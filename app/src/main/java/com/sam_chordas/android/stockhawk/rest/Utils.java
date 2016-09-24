@@ -11,6 +11,9 @@ import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
+import com.snappydb.DB;
+import com.snappydb.DBFactory;
+import com.snappydb.SnappyDB;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -121,7 +124,8 @@ public class Utils {
             builder.withValue(QuoteColumns.BIDPRICE, truncateBidPrice(jsonObject.getString("Bid")));
             Log.d("doubler","ok");
             String change = jsonObject.getString("Change");
-            builder.withValue(QuoteColumns.SYMBOL, jsonObject.getString("symbol"));
+            String sym = jsonObject.getString("symbol");
+            builder.withValue(QuoteColumns.SYMBOL,sym );
 
                 builder.withValue(QuoteColumns.PERCENT_CHANGE, truncateChange(
                         jsonObject.getString("ChangeinPercent"), true));
@@ -133,6 +137,13 @@ public class Utils {
             } else {
                 builder.withValue(QuoteColumns.ISUP, 1);
             }
+
+            Log.d("name",jsonObject.getString("Name"));
+
+            DB snappydb = DBFactory.open(MyStocksActivity.getmContext(),"graphDB");
+            snappydb.put(sym+"Name",jsonObject.getString("Name"));
+            snappydb.close();
+
         }
 
 
