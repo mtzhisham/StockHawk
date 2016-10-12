@@ -98,7 +98,11 @@ SharedPreferences prefs = null;
     if (savedInstanceState == null){
       // Run the initialize task service so that some stocks appear upon an empty database
       mServiceIntent.putExtra("tag", "init");
-
+      if (isConnected){
+        startService(mServiceIntent);
+      } else{
+        networkToast();
+      }
     }
     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -179,6 +183,26 @@ SharedPreferences prefs = null;
 
     mTitle = getTitle();
 
+    if (isConnected){
+//      long period = 30L;
+      long period = 3600L;
+      long flex = 10L;
+      String periodicTag = "periodic";
+
+      // create a periodic task to pull stocks once every hour after the app has been opened. This
+      // is so Widget data stays up to date.
+      PeriodicTask periodicTask = new PeriodicTask.Builder()
+              .setService(StockTaskService.class)
+              .setPeriod(period)
+              .setFlex(flex)
+              .setTag(periodicTag)
+              .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
+              .setRequiresCharging(false)
+              .build();
+      // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
+      // are updated.
+      GcmNetworkManager.getInstance(this).schedule(periodicTask);
+    }
 
   }
 
@@ -214,39 +238,8 @@ SharedPreferences prefs = null;
 
       //scheduler will run the fist time only
     super.onResume();
-      if (isConnected){
-      if (prefs.getBoolean("firstrun", true)) {
-          // Do first run stuff here then set 'firstrun' as false
-          // using the following line to edit/commit prefs
-
-              startService(mServiceIntent);
-            long period = 3600L;
-//              long period = 30L; //testing
-              long flex = 10L;
-              String periodicTag = "periodic";
-              // create a periodic task to pull stocks once every hour after the app has been opened. This
-              // is so Widget data stays up to date.
-              PeriodicTask periodicTask = new PeriodicTask.Builder()
-                      .setService(StockTaskService.class)
-                      .setPeriod(period)
-                      .setFlex(flex)
-                      .setTag(periodicTag)
-                      .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
-                      .setRequiresCharging(false)
-                      .build();
-              // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
-              // are updated.
-              GcmNetworkManager.getInstance(this).schedule(periodicTask);
-
-        prefs.edit().putBoolean("firstrun", false).apply();
-          }
-
-
-      }
-      else {
-        networkToast();
-      }
-    getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
+      super.onResume();
+      getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
   }
 
   public void networkToast(){

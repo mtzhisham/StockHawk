@@ -64,7 +64,7 @@ public class StockTaskService extends GcmTaskService{
     }
   @Override
   public int onRunTask(TaskParams params){
-      Log.d("MyService","run");
+//      Log.d("MyService","run");
     Cursor initQueryCursor;
     if (mContext == null){
       mContext = this;
@@ -128,7 +128,6 @@ public class StockTaskService extends GcmTaskService{
         urlString = urlStringBuilder.toString();
         try {
             getResponse = fetchData(urlString);
-
             vals = Utils.quoteJsonToContentVals(getResponse);
 
             if (getStatus(MyStocksActivity.getAppContext()) == STOCK_NOT_FOUND) {

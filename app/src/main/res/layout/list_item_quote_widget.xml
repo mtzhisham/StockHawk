@@ -25,6 +25,7 @@
       tools:text="@string/list_sym"
       android:layoutDirection="locale"
       android:textDirection="locale"
+      android:textColor="@color/widg_text"
       />
   <LinearLayout
       android:layout_width="0dp"
@@ -42,6 +43,8 @@
         tools:text="@string/list_bid"
         android:layoutDirection="locale"
         android:textDirection="locale"
+        android:textColor="@color/widg_text"
+
         />
     <TextView
         android:id="@+id/change"
@@ -54,6 +57,7 @@
         tools:text="@string/list_change"
         android:layoutDirection="locale"
         android:textDirection="locale"
+
         />
   </LinearLayout>
 </LinearLayout>
