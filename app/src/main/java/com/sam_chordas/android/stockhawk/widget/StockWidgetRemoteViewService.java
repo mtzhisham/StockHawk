@@ -91,6 +91,7 @@ public class StockWidgetRemoteViewService extends RemoteViewsService {
                 int isUp = mCursor.getInt(mCursor.getColumnIndex(QuoteColumns.ISUP));
                 // create List Item for Widget ListView
                 RemoteViews listItemRemoteView = new RemoteViews(mContext.getPackageName(), R.layout.list_item_quote_widget);
+
                 listItemRemoteView.setTextViewText(R.id.stock_symbol,stockSymbol);
                 listItemRemoteView.setTextViewText(R.id.bid_price,stockBidPrice);
                 listItemRemoteView.setTextViewText(R.id.change,stockPriceChange);

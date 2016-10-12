@@ -129,9 +129,16 @@ public class StockTaskService extends GcmTaskService{
         try {
             getResponse = fetchData(urlString);
             vals = Utils.quoteJsonToContentVals(getResponse);
-
+            //if the api didn't send the proper response
+            if(getResponse.contains("error"))
+            {      //stop the task and don't notify for UI changes
+//                 Log.d("vals","empty");
+//                Log.d("vals",getResponse);
+                stopSelf();
+                return result;
+            }
             if (getStatus(MyStocksActivity.getAppContext()) == STOCK_NOT_FOUND) {
-                ;
+
 
                 Handler handler = new Handler(Looper.getMainLooper());
 
@@ -146,6 +153,7 @@ public class StockTaskService extends GcmTaskService{
                 stopSelf();
             } else {
                 result = GcmNetworkManager.RESULT_SUCCESS;
+
                 try {
                     ContentValues contentValues = new ContentValues();
                     // update ISCURRENT to 0 (false) so new data is current
